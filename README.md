@@ -4,6 +4,7 @@ NavigationControllerWithBlocks
 The UINavigationController missing methods ! (push / pop with optional completionBlock). 
 The implementation use the navigationController delegate on UINavigationController itself.
 
+
 This project provides : 
 * A completionBlock to manage your push/pop events,
 * A safe way to push/pop multiple controllers at the same times.
@@ -13,9 +14,11 @@ This project provides :
    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
 ```
-No crash !!
+* No more "Nested pop animation can result in corrupted navigation bar", 
+* No more "Finishing up a navigation transition in an unexpected state. Navigation Bar subview tree might get corrupted."
+* No more crash because of deallocated controllers between your multiple animations.
 
-Added methods 
+New methods 
 ---------------------------------------------------
 
 ```objc
@@ -51,4 +54,7 @@ but use the pop/push methods
    NSLog(@"Hi ! Push done !");
 }];
 ```
+
+![Image](./screenshots/demo.png)
+
 
