@@ -36,6 +36,7 @@
 
 #pragma mark -
 
+/*
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     [self pushViewController:viewController animated:animated withCompletionBlock:NULL];
@@ -46,5 +47,6 @@
     [self popViewControllerAnimated:animated withCompletionBlock:NULL];
     return nil;
 }
+ */
 
 @end
