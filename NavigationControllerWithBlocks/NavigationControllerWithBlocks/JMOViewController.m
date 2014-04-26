@@ -10,7 +10,6 @@
 #import "UINavigationController+CompletionBlock.h"
 
 @interface JMOViewController ()
-
 @end
 
 @implementation JMOViewController
@@ -23,24 +22,20 @@
     if (self.navigationController) {
         [self.navigationController activateCompletionBlock];
     }
+    if (self.title.length == 0) {
+        self.title = @"controller_first";
+    }
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSLog(@"%@ viewDidAppear",self.title);
     [super viewDidAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSLog(@"%@ viewDidDisappear",self.title);
     [super viewDidDisappear:animated];
 }
 
@@ -49,6 +44,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"Main" bundle:[NSBundle mainBundle]];
     JMOViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"JMOViewController"];
+    vc.title = [NSString stringWithFormat:@"controller_%d",self.navigationController.viewControllers.count];
     [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
         NSLog(@"Hiihihi je push et je déclanche ça aprés viewDidAppear");
     }];

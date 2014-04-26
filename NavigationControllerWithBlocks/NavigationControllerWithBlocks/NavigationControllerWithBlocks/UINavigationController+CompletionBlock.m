@@ -60,6 +60,8 @@
     }
 }
 
+#pragma marl - 
+
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
     [self setCompletionBlock:completionBlock];
@@ -75,6 +77,11 @@
         [self setTargetedViewController:self.viewControllers[nbControllers -2]];
     }
     [self popViewControllerAnimated:YES];
+}
+
+- (void)popToRootViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
+{
+    
 }
 
 @end
