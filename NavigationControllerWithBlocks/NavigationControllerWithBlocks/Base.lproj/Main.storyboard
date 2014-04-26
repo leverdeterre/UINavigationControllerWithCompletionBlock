@@ -71,7 +71,7 @@
                                 <rect key="frame" x="13" y="77" width="294" height="136"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">NavigationControllerWithCompletionBlocks allows : 
-- execute a completionBlock after the push/pop event,
+- execute a completionBlock after a push, pop event,
 - support multiple push/pop events at the same times.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
