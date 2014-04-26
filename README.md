@@ -4,7 +4,6 @@ NavigationControllerWithBlocks
 The UINavigationController missing methods ! (push / pop with optional completionBlock). 
 The implementation use the navigationController delegate on UINavigationController itself.
 
-![Image](./screenshots/demo.png)
 
 This project provides : 
 * A completionBlock to manage your push/pop events,
@@ -15,7 +14,8 @@ This project provides :
    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
 ```
-No crash !!
+
+![Image](./screenshots/demo.png)
 
 Added methods 
 ---------------------------------------------------
