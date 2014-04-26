@@ -23,6 +23,7 @@
 		C240095A190BAB57006FBF64 /* NavigationControllerWithBlocksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400959190BAB57006FBF64 /* NavigationControllerWithBlocksTests.m */; };
 		C2400968190BAB95006FBF64 /* JMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400965190BAB95006FBF64 /* JMONavigationController.m */; };
 		C2400969190BAB95006FBF64 /* UINavigationController+CompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */; };
+		C240096C190BFA34006FBF64 /* JMONavigationControllerAction.m in Sources */ = {isa = PBXBuildFile; fileRef = C240096B190BFA34006FBF64 /* JMONavigationControllerAction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		C2400965190BAB95006FBF64 /* JMONavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMONavigationController.m; sourceTree = "<group>"; };
 		C2400966190BAB95006FBF64 /* UINavigationController+CompletionBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+CompletionBlock.h"; sourceTree = "<group>"; };
 		C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+CompletionBlock.m"; sourceTree = "<group>"; };
+		C240096A190BFA34006FBF64 /* JMONavigationControllerAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMONavigationControllerAction.h; sourceTree = "<group>"; };
+		C240096B190BFA34006FBF64 /* JMONavigationControllerAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMONavigationControllerAction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +169,8 @@
 				C2400965190BAB95006FBF64 /* JMONavigationController.m */,
 				C2400966190BAB95006FBF64 /* UINavigationController+CompletionBlock.h */,
 				C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */,
+				C240096A190BFA34006FBF64 /* JMONavigationControllerAction.h */,
+				C240096B190BFA34006FBF64 /* JMONavigationControllerAction.m */,
 			);
 			name = NavigationControllerWithBlocks;
 			path = NavigationControllerWithBlocks/NavigationControllerWithBlocks;
@@ -271,6 +276,7 @@
 			files = (
 				C240093B190BAB57006FBF64 /* main.m in Sources */,
 				C2400945190BAB57006FBF64 /* JMOViewController.m in Sources */,
+				C240096C190BFA34006FBF64 /* JMONavigationControllerAction.m in Sources */,
 				C2400968190BAB95006FBF64 /* JMONavigationController.m in Sources */,
 				C240093F190BAB57006FBF64 /* JMOAppDelegate.m in Sources */,
 				C2400969190BAB95006FBF64 /* UINavigationController+CompletionBlock.m in Sources */,

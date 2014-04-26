@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMONavigationControllerAction.h"
 
-typedef void (^JMONavCompletionBlock)(BOOL successful);
+typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
+    UINavigationControllerNone,
+    UINavigationControllerPushInProgress,
+    UINavigationControllerPopInProgress,
+    UINavigationControllerPopToRootInProgress
+};
 
 @interface UINavigationController (CompletionBlock) <UINavigationControllerDelegate>
 

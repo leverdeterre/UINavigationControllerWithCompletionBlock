@@ -36,6 +36,7 @@
 
 #pragma mark -
 
+/*
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     [self pushViewController:viewController animated:animated withCompletionBlock:^(BOOL successful) {
@@ -51,7 +52,6 @@
     
     return nil;
 }
-
-
+*/
 
 @end

@@ -39,6 +39,13 @@
     [super viewDidDisappear:animated];
 }
 
+- (void)dealloc
+{
+    NSLog(@"%@ dealloc",self.title);
+}
+
+#pragma mark - IBActions
+
 - (IBAction)push:(id)sender
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
@@ -61,6 +68,19 @@
 {
     [self.navigationController popToRootViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
         NSLog(@"popToRoot done!");
+    }];
+}
+
+- (IBAction)triplepPopBug:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+        NSLog(@"Hi ! Pop1 done !");
+    }];
+    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+        NSLog(@"Hi ! Pop2 done !");
+    }];
+    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+        NSLog(@"Hi ! Pop3 done !");
     }];
 }
 

@@ -9,13 +9,6 @@
 #import "UINavigationController+CompletionBlock.h"
 #import <objc/runtime.h>
 
-typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
-    UINavigationControllerNone,
-    UINavigationControllerPushInProgress,
-    UINavigationControllerPopInProgress,
-    UINavigationControllerPopToRootInProgress
-};
-
 @implementation UINavigationController (CompletionBlock)
 
 - (void)activateCompletionBlock
@@ -23,7 +16,17 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
     self.delegate = self;
 }
 
-#pragma marl - accessories
+#pragma mark - accessories
+
+- (NSArray *)actionsQueue
+{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setActionsQueue:(NSArray *)actions
+{
+    objc_setAssociatedObject(self, @selector(actionsQueue),actions, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (UINavigationControllerAction)currentAction
 {
@@ -32,6 +35,9 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
 
 - (void)setCurrentAction:(UINavigationControllerAction)action
 {
+    if (action == UINavigationControllerNone) {
+        [self setTargetedViewController:nil];
+    }
     objc_setAssociatedObject(self, @selector(currentAction), @(action), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -55,7 +61,7 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
     objc_setAssociatedObject(self, @selector(targetedViewController), vc, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-#pragma marl - UINavigationController delegate
+#pragma mark - UINavigationController delegate
 
 // Called when the navigation controller shows a new top view controller via a push, pop or setting of the view controller stack.
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -75,13 +81,21 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
                 block(YES);
                 [self setCompletionBlock:NULL];
             }
-            [self setTargetedViewController:nil];
+        
             [self setCurrentAction:UINavigationControllerNone];
+
+            //nextActions ?
+            JMONavigationControllerAction *nextAction = [self nextAction];
+            if (nil != nextAction) {
+                [self removActionToQueue:nextAction];
+                [self setCurrentAction:UINavigationControllerNone];
+                [self popViewControllerAnimated:nextAction.animated withCompletionBlock:nextAction.completionBlock];
+            }
         }
     }
 }
 
-#pragma marl - 
+#pragma mark -
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
@@ -95,14 +109,18 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
 {
     if ([self currentAction] == UINavigationControllerPopToRootInProgress) {
         //keep the old completionBlock
+    } else if ([self currentAction] == UINavigationControllerPopInProgress) {
+        JMONavigationControllerAction *action = [JMONavigationControllerAction actionTye:JMONavigationControllerActionPop completionBlock:completionBlock animated:animated];
+        [self addActionToQueue:action];
+        return;
     } else {
         [self setCurrentAction:UINavigationControllerPopInProgress];
         [self setCompletionBlock:completionBlock];
     }
     
-    NSInteger nbControllers = self.viewControllers.count;
-    if ((nbControllers -2) >= 0) {
-        [self setTargetedViewController:self.viewControllers[nbControllers -2]];
+    UIViewController *targetedVc = [self targetedViewControllerAtIndex:1];
+    if (nil != targetedVc) {
+        [self setTargetedViewController:targetedVc];
         [self popViewControllerAnimated:animated];
     } else {
         if ([self completionBlock]) {
@@ -120,6 +138,47 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
     [self setCurrentAction:UINavigationControllerPopToRootInProgress];
     [self setCompletionBlock:completionBlock];
     [self popViewControllerAnimated:animated withCompletionBlock:NULL];
+}
+
+#pragma mark - Manage actions queue
+
+- (JMONavigationControllerAction *)nextAction
+{
+    NSArray *actions = [self actionsQueue];
+    if(actions.count > 0) {
+        return [actions firstObject];
+    }
+    return nil;
+}
+
+- (void)removActionToQueue:(JMONavigationControllerAction *)action
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSMutableArray *actions = [[self actionsQueue] mutableCopy];
+    [actions removeObject:action];
+    [self setActionsQueue:actions];
+}
+
+- (void)addActionToQueue:(JMONavigationControllerAction *)action
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSMutableArray *actions = [[self actionsQueue] mutableCopy];
+    if(nil == actions) {
+        actions = [NSMutableArray new];
+    }
+        
+    [actions addObject:action];
+    [self setActionsQueue:actions];
+}
+
+- (UIViewController *)targetedViewControllerAtIndex:(NSInteger)index
+{
+    NSInteger nbControllers = self.viewControllers.count;
+    if ((nbControllers -(index)-1) >= 0) {
+        return self.viewControllers[(nbControllers -(index)-1)];
+    } else {
+        return nil;
+    }
 }
 
 @end
