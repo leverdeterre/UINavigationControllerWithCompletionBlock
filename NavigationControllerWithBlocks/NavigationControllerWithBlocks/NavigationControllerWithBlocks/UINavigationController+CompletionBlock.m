@@ -9,6 +9,13 @@
 #import "UINavigationController+CompletionBlock.h"
 #import <objc/runtime.h>
 
+typedef NS_ENUM(NSUInteger, UINavigationControllerAction) {
+    UINavigationControllerNone,
+    UINavigationControllerPushInProgress,
+    UINavigationControllerPopInProgress,
+    UINavigationControllerPopToRootInProgress
+};
+
 @implementation UINavigationController (CompletionBlock)
 
 - (void)activateCompletionBlock
@@ -17,6 +24,16 @@
 }
 
 #pragma marl - accessories
+
+- (UINavigationControllerAction)currentAction
+{
+    return [objc_getAssociatedObject(self, _cmd) intValue];
+}
+
+- (void)setCurrentAction:(UINavigationControllerAction)action
+{
+    objc_setAssociatedObject(self, @selector(currentAction), @(action), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (JMONavCompletionBlock)completionBlock
 {
@@ -38,16 +55,6 @@
     objc_setAssociatedObject(self, @selector(targetedViewController), vc, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)popToRootInProgress
-{
-    return [objc_getAssociatedObject(self, _cmd) boolValue];
-}
-
-- (void)setPopToRootInProgress:(BOOL)popToRootInProgressBool
-{
-    objc_setAssociatedObject(self, @selector(popToRootInProgress), @(popToRootInProgressBool), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 #pragma marl - UINavigationController delegate
 
 // Called when the navigation controller shows a new top view controller via a push, pop or setting of the view controller stack.
@@ -60,7 +67,7 @@
 {
     //NSLog(@"%s",__PRETTY_FUNCTION__);
     if (viewController == [self targetedViewController]) {
-        if ([self popToRootInProgress]) {
+        if ([self currentAction] == UINavigationControllerPopToRootInProgress) {
             [self popViewControllerAnimated:animated withCompletionBlock:NULL];
         } else {
             if ([self completionBlock]) {
@@ -69,6 +76,7 @@
                 [self setCompletionBlock:NULL];
             }
             [self setTargetedViewController:nil];
+            [self setCurrentAction:UINavigationControllerNone];
         }
     }
 }
@@ -78,15 +86,17 @@
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
     [self setCompletionBlock:completionBlock];
+    [self setCurrentAction:UINavigationControllerPushInProgress];
     [self setTargetedViewController:viewController];
     [self pushViewController:viewController animated:animated];
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-    if ([self popToRootInProgress]) {
+    if ([self currentAction] == UINavigationControllerPopToRootInProgress) {
         //keep the old completionBlock
     } else {
+        [self setCurrentAction:UINavigationControllerPopInProgress];
         [self setCompletionBlock:completionBlock];
     }
     
@@ -100,13 +110,14 @@
             block(YES);
             [self setCompletionBlock:NULL];
         }
-        [self setPopToRootInProgress:NO];
+        
+        [self setCurrentAction:UINavigationControllerNone];
     }
 }
 
 - (void)popToRootViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-    [self setPopToRootInProgress:YES];
+    [self setCurrentAction:UINavigationControllerPopToRootInProgress];
     [self setCompletionBlock:completionBlock];
     [self popViewControllerAnimated:animated withCompletionBlock:NULL];
 }

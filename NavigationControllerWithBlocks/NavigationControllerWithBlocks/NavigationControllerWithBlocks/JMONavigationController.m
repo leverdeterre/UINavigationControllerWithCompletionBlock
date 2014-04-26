@@ -34,4 +34,24 @@
     return self;
 }
 
+#pragma mark -
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [self pushViewController:viewController animated:animated withCompletionBlock:^(BOOL successful) {
+        
+    }];
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated
+{
+    [self popViewControllerAnimated:animated withCompletionBlock:^(BOOL successful) {
+        
+    }];
+    
+    return nil;
+}
+
+
+
 @end
