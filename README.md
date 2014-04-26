@@ -13,15 +13,15 @@ Added methods
 - (void)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock;
 ```
 
-Usage, using category (UINavigationController+CompletionBlock)
+Usage
 -------------------------------------------------------------
+* using category (UINavigationController+CompletionBlock)
 Just call the method
 ```objc
 - (void)activateCompletionBlock;
 ```
 
 
-Usage, using JMONavigationController (subclassing UINavigationController)
--------------------------------------------------------------
+* using JMONavigationController (subclassing UINavigationController)
 Noting to be done, default initalizers are overided to call activateCompletionBlock.
 
