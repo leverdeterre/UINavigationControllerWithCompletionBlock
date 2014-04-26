@@ -36,22 +36,15 @@
 
 #pragma mark -
 
-/*
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    [self pushViewController:viewController animated:animated withCompletionBlock:^(BOOL successful) {
-        
-    }];
+    [self pushViewController:viewController animated:animated withCompletionBlock:NULL];
 }
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
-    [self popViewControllerAnimated:animated withCompletionBlock:^(BOOL successful) {
-        
-    }];
-    
+    [self popViewControllerAnimated:animated withCompletionBlock:NULL];
     return nil;
 }
-*/
 
 @end

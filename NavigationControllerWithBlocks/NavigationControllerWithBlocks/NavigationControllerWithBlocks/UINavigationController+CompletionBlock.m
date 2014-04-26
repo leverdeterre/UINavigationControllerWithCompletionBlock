@@ -99,6 +99,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
+#warning addActionToQueue if multiple call at the "same time"
     [self setCompletionBlock:completionBlock];
     [self setCurrentAction:UINavigationControllerPushInProgress];
     [self setTargetedViewController:viewController];
