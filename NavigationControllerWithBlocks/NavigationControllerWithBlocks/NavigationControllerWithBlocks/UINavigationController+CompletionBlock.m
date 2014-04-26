@@ -28,14 +28,14 @@
     objc_setAssociatedObject(self, @selector(actionsQueue),actions, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UINavigationControllerAction)currentAction
+- (UINavigationControllerState)currentAction
 {
     return [objc_getAssociatedObject(self, _cmd) intValue];
 }
 
-- (void)setCurrentAction:(UINavigationControllerAction)action
+- (void)setCurrentAction:(UINavigationControllerState)action
 {
-    if (action == UINavigationControllerNone) {
+    if (action == UINavigationControllerStateNeutral) {
         [self setTargetedViewController:nil];
     }
     objc_setAssociatedObject(self, @selector(currentAction), @(action), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -73,24 +73,17 @@
 {
     //NSLog(@"%s",__PRETTY_FUNCTION__);
     if (viewController == [self targetedViewController]) {
-        if ([self currentAction] == UINavigationControllerPopToRootInProgress) {
+        //if we are poping to root, continue
+        if ([self currentAction] == UINavigationControllerStatePopToRootInProgress) {
             [self popViewControllerAnimated:animated withCompletionBlock:NULL];
         } else {
-            if ([self completionBlock]) {
-                JMONavCompletionBlock block = [self completionBlock];
-                block(YES);
-                [self setCompletionBlock:NULL];
-            }
-        
-            [self setCurrentAction:UINavigationControllerNone];
+            
+            //if we have push or pop something, use completionBlock and finish
+            [self consumeCompletionBlock];
+            [self setCurrentAction:UINavigationControllerStateNeutral];
 
-            //nextActions ?
-            JMONavigationControllerAction *nextAction = [self nextAction];
-            if (nil != nextAction) {
-                [self removActionToQueue:nextAction];
-                [self setCurrentAction:UINavigationControllerNone];
-                [self popViewControllerAnimated:nextAction.animated withCompletionBlock:nextAction.completionBlock];
-            }
+            //nextAction
+            [self performNextActionInQueue];
         }
     }
 }
@@ -99,51 +92,51 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-#warning addActionToQueue if multiple call at the "same time"
-    [self setCompletionBlock:completionBlock];
-    [self setCurrentAction:UINavigationControllerPushInProgress];
-    [self setTargetedViewController:viewController];
-    [self pushViewController:viewController animated:animated];
+    if ([self currentAction] == UINavigationControllerStatePushInProgress) {
+        JMONavigationAction *action = [JMONavigationAction actionTye:JMONavigationActionTypePush completionBlock:completionBlock animated:animated viewController:viewController];
+        [self addActionToQueue:action];
+    } else {
+        [self setCompletionBlock:completionBlock];
+        [self setCurrentAction:UINavigationControllerStatePushInProgress];
+        [self setTargetedViewController:viewController];
+        [self pushViewController:viewController animated:animated];
+    }
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-    if ([self currentAction] == UINavigationControllerPopToRootInProgress) {
-        //keep the old completionBlock
-    } else if ([self currentAction] == UINavigationControllerPopInProgress) {
-        JMONavigationControllerAction *action = [JMONavigationControllerAction actionTye:JMONavigationControllerActionPop completionBlock:completionBlock animated:animated];
+    if ([self currentAction] == UINavigationControllerStatePopInProgress) {
+        JMONavigationAction *action = [JMONavigationAction actionTye:JMONavigationActionTypePop completionBlock:completionBlock animated:animated];
         [self addActionToQueue:action];
         return;
-    } else {
-        [self setCurrentAction:UINavigationControllerPopInProgress];
+    } else if ([self currentAction] != UINavigationControllerStatePopToRootInProgress){
+        [self setCurrentAction:UINavigationControllerStatePopInProgress];
         [self setCompletionBlock:completionBlock];
+    } else {
+        //We are UINavigationControllerPopToRootInProgress, we keep the final completionBlock
     }
     
-    UIViewController *targetedVc = [self targetedViewControllerAtIndex:1];
-    if (nil != targetedVc) {
+    UIViewController *targetedVc = [self estimateTargetedViewController];
+    if (nil != targetedVc) { //There is a controller before the current
         [self setTargetedViewController:targetedVc];
         [self popViewControllerAnimated:animated];
     } else {
-        if ([self completionBlock]) {
-            JMONavCompletionBlock block = [self completionBlock];
-            block(YES);
-            [self setCompletionBlock:NULL];
-        }
-        
-        [self setCurrentAction:UINavigationControllerNone];
+        //Nothing to pop, execute completion block and finish
+        [self consumeCompletionBlock];
+        [self setCurrentAction:UINavigationControllerStateNeutral];
     }
 }
 
 - (void)popToRootViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-    [self setCurrentAction:UINavigationControllerPopToRootInProgress];
+    [self setCurrentAction:UINavigationControllerStatePopToRootInProgress];
     [self setCompletionBlock:completionBlock];
     [self popViewControllerAnimated:animated withCompletionBlock:NULL];
 }
 
 #pragma mark - Manage actions queue
 
-- (JMONavigationControllerAction *)nextAction
+- (JMONavigationAction *)nextAction
 {
     NSArray *actions = [self actionsQueue];
     if(actions.count > 0) {
@@ -152,7 +145,7 @@
     return nil;
 }
 
-- (void)removActionToQueue:(JMONavigationControllerAction *)action
+- (void)removActionToQueue:(JMONavigationAction *)action
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
     NSMutableArray *actions = [[self actionsQueue] mutableCopy];
@@ -160,7 +153,7 @@
     [self setActionsQueue:actions];
 }
 
-- (void)addActionToQueue:(JMONavigationControllerAction *)action
+- (void)addActionToQueue:(JMONavigationAction *)action
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
     NSMutableArray *actions = [[self actionsQueue] mutableCopy];
@@ -172,13 +165,38 @@
     [self setActionsQueue:actions];
 }
 
-- (UIViewController *)targetedViewControllerAtIndex:(NSInteger)index
+#pragma mark - Helpers
+
+- (UIViewController *)estimateTargetedViewController
 {
     NSInteger nbControllers = self.viewControllers.count;
-    if ((nbControllers -(index)-1) >= 0) {
-        return self.viewControllers[(nbControllers -(index)-1)];
+    if ((nbControllers-2) >= 0) {
+        return self.viewControllers[nbControllers-2];
     } else {
         return nil;
+    }
+}
+
+- (void)performNextActionInQueue
+{
+    JMONavigationAction *nextAction = [self nextAction];
+    if (nil != nextAction) {
+        [self removActionToQueue:nextAction];
+        [self setCurrentAction:UINavigationControllerStateNeutral];
+        if (nextAction.type == JMONavigationActionTypePop) {
+            [self popViewControllerAnimated:nextAction.animated withCompletionBlock:nextAction.completionBlock];
+        } else {
+            [self pushViewController:nextAction.viewController animated:nextAction.animated withCompletionBlock:nextAction.completionBlock];
+        }
+    }
+}
+
+- (void)consumeCompletionBlock
+{
+    if ([self completionBlock]) {
+        JMONavCompletionBlock block = [self completionBlock];
+        block();
+        [self setCompletionBlock:NULL];
     }
 }
 

@@ -52,35 +52,37 @@
                                 @"Main" bundle:[NSBundle mainBundle]];
     JMOViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"JMOViewController"];
     vc.title = [NSString stringWithFormat:@"controller_%d",self.navigationController.viewControllers.count];
-    [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
+    [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Push done !");
     }];
 }
 
 - (IBAction)pop:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Pop done !");
     }];
 }
 
 - (IBAction)popToRootAnimated:(id)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+    [self.navigationController popToRootViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"popToRoot done!");
     }];
 }
 
 - (IBAction)triplepPopBug:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Pop1 done !");
     }];
-    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Pop2 done !");
     }];
-    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Pop3 done !");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"last pop done" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
     }];
 }
 
