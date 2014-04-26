@@ -1,7 +1,7 @@
 NavigationControllerWithBlocks
 ==============================
 
-The UINavigationController missing methods ! (push / pop with optional completionBlock). 
+The UINavigationController missing API ! (push / pop with optional completionBlock). 
 The implementation use the navigationController delegate on UINavigationController itself.
 
 
