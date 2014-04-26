@@ -14,9 +14,9 @@ This project provides :
    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
    [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
 ```
-* No more "nested pop animation can result in corrupted navigation bar", 
+* No more "Nested pop animation can result in corrupted navigation bar", 
 * No more "Finishing up a navigation transition in an unexpected state. Navigation Bar subview tree might get corrupted."
-* No more crash because your are controller are deallocated between your multiple animations.
+* No more crash because of deallocated controllers between your multiple animations.
 
 ![Image](./screenshots/demo.png)
 
