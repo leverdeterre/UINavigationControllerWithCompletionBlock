@@ -15,13 +15,11 @@ Added methods
 
 Usage
 -------------------------------------------------------------
-* using category (UINavigationController+CompletionBlock)
-Just call the method
+* using category (UINavigationController+CompletionBlock), just call the method to activate auto delegation.
 ```objc
 - (void)activateCompletionBlock;
 ```
 
 
-* using JMONavigationController (subclassing UINavigationController)
-Noting to be done, default initalizers are overided to call activateCompletionBlock.
+* using JMONavigationController (subclassing UINavigationController), nothing to be done, default initalizers are overided to call activateCompletionBlock.
 
