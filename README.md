@@ -18,9 +18,7 @@ This project provides :
 * No more "Finishing up a navigation transition in an unexpected state. Navigation Bar subview tree might get corrupted."
 * No more crash because of deallocated controllers between your multiple animations.
 
-![Image](./screenshots/demo.png)
-
-Added methods 
+New methods 
 ---------------------------------------------------
 
 ```objc
@@ -56,4 +54,7 @@ but use the pop/push methods
    NSLog(@"Hi ! Push done !");
 }];
 ```
+
+![Image](./screenshots/demo.png)
+
 
