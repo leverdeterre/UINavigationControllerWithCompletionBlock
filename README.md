@@ -35,7 +35,20 @@ Usage
 ```objc
 - (void)activateCompletionBlock;
 ```
-
+and use the pop/push methods 
+```objc
+[self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
+[self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
+   NSLog(@"Hi ! Push done !");
+}];
+```
 
 * using JMONavigationController (subclassing UINavigationController), nothing to be done, default initalizers are overided to call activateCompletionBlock.
+but use the pop/push methods 
+```objc
+[self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
+[self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
+   NSLog(@"Hi ! Push done !");
+}];
+```
 
