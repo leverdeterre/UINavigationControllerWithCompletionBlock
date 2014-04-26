@@ -44,7 +44,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="pop:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="zww-jg-ps3"/>
+                                    <action selector="popToRootAnimated:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Nh7-zx-81g"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MIo-jp-cMp">

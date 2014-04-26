@@ -28,14 +28,24 @@
     objc_setAssociatedObject(self, @selector(completionBlock), completionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+- (UIViewController *)targetedViewController
+{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
 - (void)setTargetedViewController:(UIViewController *)vc
 {
     objc_setAssociatedObject(self, @selector(targetedViewController), vc, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIViewController *)targetedViewController
+- (BOOL)popToRootInProgress
 {
-    return objc_getAssociatedObject(self, _cmd);
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+
+- (void)setPopToRootInProgress:(BOOL)popToRootInProgressBool
+{
+    objc_setAssociatedObject(self, @selector(popToRootInProgress), @(popToRootInProgressBool), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma marl - UINavigationController delegate
@@ -50,13 +60,16 @@
 {
     //NSLog(@"%s",__PRETTY_FUNCTION__);
     if (viewController == [self targetedViewController]) {
-        if ([self completionBlock]) {
-            JMONavCompletionBlock block = [self completionBlock];
-            block(YES);
-            [self setCompletionBlock:NULL];
+        if ([self popToRootInProgress]) {
+            [self popViewControllerAnimated:animated withCompletionBlock:NULL];
+        } else {
+            if ([self completionBlock]) {
+                JMONavCompletionBlock block = [self completionBlock];
+                block(YES);
+                [self setCompletionBlock:NULL];
+            }
+            [self setTargetedViewController:nil];
         }
-        
-        [self setTargetedViewController:nil];
     }
 }
 
@@ -71,17 +84,31 @@
 
 - (void)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-    [self setCompletionBlock:completionBlock];
+    if ([self popToRootInProgress]) {
+        //keep the old completionBlock
+    } else {
+        [self setCompletionBlock:completionBlock];
+    }
+    
     NSInteger nbControllers = self.viewControllers.count;
     if ((nbControllers -2) >= 0) {
         [self setTargetedViewController:self.viewControllers[nbControllers -2]];
+        [self popViewControllerAnimated:animated];
+    } else {
+        if ([self completionBlock]) {
+            JMONavCompletionBlock block = [self completionBlock];
+            block(YES);
+            [self setCompletionBlock:NULL];
+        }
+        [self setPopToRootInProgress:NO];
     }
-    [self popViewControllerAnimated:YES];
 }
 
 - (void)popToRootViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-    
+    [self setPopToRootInProgress:YES];
+    [self setCompletionBlock:completionBlock];
+    [self popViewControllerAnimated:animated withCompletionBlock:NULL];
 }
 
 @end

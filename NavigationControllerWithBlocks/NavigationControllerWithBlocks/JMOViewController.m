@@ -46,16 +46,22 @@
     JMOViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"JMOViewController"];
     vc.title = [NSString stringWithFormat:@"controller_%d",self.navigationController.viewControllers.count];
     [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
-        NSLog(@"Hiihihi je push et je déclanche ça aprés viewDidAppear");
+        NSLog(@"Hi ! Push done !");
     }];
 }
 
 - (IBAction)pop:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
-        NSLog(@"Hiihihi je pop et je déclanche ça aprés viewDidAppear");
+        NSLog(@"Hi ! Pop done !");
     }];
 }
 
+- (IBAction)popToRootAnimated:(id)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:YES withCompletionBlock:^(BOOL successful) {
+        NSLog(@"popToRoot done!");
+    }];
+}
 
 @end
