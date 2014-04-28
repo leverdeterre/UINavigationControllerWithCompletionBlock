@@ -34,9 +34,16 @@ New methods
                     withCompletionBlock:(JMONavCompletionBlock)completionBlock;
 ```
 
-Usage
+Swizzled methods 
+---------------------------------------------------
+```objc
+[self.navigationController popViewControllerAnimated:YES];
+[self.navigationController pushViewController:vc animated:YES];
+```
+
+Usage UINavigationController+CompletionBlock
 -------------------------------------------------------------
-* using category (UINavigationController+CompletionBlock), just call the new pop/push methods 
+* Just call the new pop/push methods 
 ```objc
 [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
 [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
@@ -44,13 +51,10 @@ Usage
 }];
 ```
 
-* using JMONavigationController (subclassing UINavigationController), nothing to be done.
-but use the pop/push methods 
+* call Apple the new push/pop API. Using method swizzling, will call the new API with default NULL completionBlock
 ```objc
-[self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
-[self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
-   NSLog(@"Hi ! Push done !");
-}];
+[self.navigationController popViewControllerAnimated:YES];
+[self.navigationController pushViewController:vc animated:YES];
 ```
 
 ![Image](./screenshots/demo.png)
