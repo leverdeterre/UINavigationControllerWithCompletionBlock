@@ -20,7 +20,9 @@
 
 - (void)setDelegate_swizzle:(id<UINavigationControllerDelegate>)delegate
 {
-    [self setNextDelegate:delegate];
+    if (self != delegate) {
+        [self setNextDelegate:delegate];
+    }
  	[UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
     [self setDelegate:self];
     [UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
@@ -147,6 +149,10 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
+    if (nil == self.delegate) {
+        self.delegate = self;
+    }
+    
     if ([self currentAction] == UINavigationControllerStatePushInProgress) {
         JMONavigationAction *action = [JMONavigationAction actionTye:JMONavigationActionTypePush completionBlock:completionBlock animated:animated viewController:viewController];
         [self addActionToQueue:action];
@@ -166,6 +172,10 @@
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
+    if (nil == self.delegate) {
+        self.delegate = self;
+    }
+    
     if ([self currentAction] == UINavigationControllerStatePopInProgress) {
         JMONavigationAction *action = [JMONavigationAction actionTye:JMONavigationActionTypePop completionBlock:completionBlock animated:animated];
         [self addActionToQueue:action];
@@ -197,6 +207,10 @@
 
 - (void)popToRootViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
+    if (nil == self.delegate) {
+        self.delegate = self;
+    }
+    
     [self setCurrentAction:UINavigationControllerStatePopToRootInProgress];
     [self setCompletionBlock:completionBlock];
     [self popViewControllerAnimated:animated withCompletionBlock:NULL];
