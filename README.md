@@ -36,11 +36,7 @@ New methods
 
 Usage
 -------------------------------------------------------------
-* using category (UINavigationController+CompletionBlock), just call the method to activate auto delegation.
-```objc
-- (void)activateCompletionBlock;
-```
-and use the pop/push methods 
+* using category (UINavigationController+CompletionBlock), just call the new pop/push methods 
 ```objc
 [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
 [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
@@ -48,7 +44,7 @@ and use the pop/push methods
 }];
 ```
 
-* using JMONavigationController (subclassing UINavigationController), nothing to be done, default initalizers are overided to call activateCompletionBlock.
+* using JMONavigationController (subclassing UINavigationController), nothing to be done.
 but use the pop/push methods 
 ```objc
 [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
