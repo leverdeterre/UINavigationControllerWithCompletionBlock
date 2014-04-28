@@ -7,7 +7,6 @@
 //
 
 #import "UINavigationController+CompletionBlock.h"
-#import "JMONavigationController.h"
 #import "JRSwizzle.h"
 #import <objc/runtime.h>
 
@@ -246,7 +245,6 @@
 
 - (void)removActionToQueue:(JMONavigationAction *)action
 {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
     NSMutableArray *actions = [[self actionsQueue] mutableCopy];
     [actions removeObject:action];
     [self setActionsQueue:actions];
@@ -254,7 +252,6 @@
 
 - (void)addActionToQueue:(JMONavigationAction *)action
 {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
     NSMutableArray *actions = [[self actionsQueue] mutableCopy];
     if(nil == actions) {
         actions = [NSMutableArray new];
