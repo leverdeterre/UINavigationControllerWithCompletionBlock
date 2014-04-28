@@ -37,8 +37,8 @@ New methods
 Swizzled methods 
 ---------------------------------------------------
 ```objc
-[self.navigationController popViewControllerAnimated:YES];
-[self.navigationController pushViewController:vc animated:YES];
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated; 
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated;
 ```
 
 Usage UINavigationController+CompletionBlock
