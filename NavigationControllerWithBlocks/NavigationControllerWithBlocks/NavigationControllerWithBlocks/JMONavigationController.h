@@ -10,4 +10,7 @@
 
 @interface JMONavigationController : UINavigationController
 
+- (void)superPushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (UIViewController *)superPopViewControllerAnimated:(BOOL)animated;
+
 @end

@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>4EC8F0EC-DF30-4D86-B574-3989E026F212</string>
+	<string>DFEF07F1-A4C8-41A8-90E4-00E004D17A6C</string>
 	<key>IDESourceControlProjectName</key>
 	<string>NavigationControllerWithBlocks</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>83A2B0F9-7CCA-49C7-9E3C-E72CB3B5BFA3</key>
-		<string>https://github.com/leverdeterre/NavigationControllerWithBlocks.git</string>
+		<key>BEA83AFE-7D4E-4DEA-AA22-8981AB9B7ED1</key>
+		<string>https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>NavigationControllerWithBlocks/NavigationControllerWithBlocks.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>83A2B0F9-7CCA-49C7-9E3C-E72CB3B5BFA3</key>
+		<key>BEA83AFE-7D4E-4DEA-AA22-8981AB9B7ED1</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/leverdeterre/NavigationControllerWithBlocks.git</string>
+	<string>https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>83A2B0F9-7CCA-49C7-9E3C-E72CB3B5BFA3</string>
+	<string>BEA83AFE-7D4E-4DEA-AA22-8981AB9B7ED1</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>83A2B0F9-7CCA-49C7-9E3C-E72CB3B5BFA3</string>
+			<string>BEA83AFE-7D4E-4DEA-AA22-8981AB9B7ED1</string>
 			<key>IDESourceControlWCCName</key>
-			<string>NavigationControllerWithBlocks</string>
+			<string>UINavigationControllerWithCompletionBlock</string>
 		</dict>
 	</array>
 </dict>

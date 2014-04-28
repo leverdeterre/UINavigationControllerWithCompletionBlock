@@ -7,6 +7,7 @@
 //
 
 #import "UINavigationController+CompletionBlock.h"
+#import "JMONavigationController.h"
 #import <objc/runtime.h>
 
 @implementation UINavigationController (CompletionBlock)
@@ -99,16 +100,23 @@
         [self setCompletionBlock:completionBlock];
         [self setCurrentAction:UINavigationControllerStatePushInProgress];
         [self setTargetedViewController:viewController];
-        [self pushViewController:viewController animated:animated];
+        
+        if ([self isKindOfClass:[JMONavigationController class]]) {
+            JMONavigationController *navC = (JMONavigationController *)self;
+            [navC superPushViewController:viewController animated:animated];
+        } else {
+            [self pushViewController:viewController animated:animated];
+        }
+        
     }
 }
 
-- (void)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
     if ([self currentAction] == UINavigationControllerStatePopInProgress) {
         JMONavigationAction *action = [JMONavigationAction actionTye:JMONavigationActionTypePop completionBlock:completionBlock animated:animated];
         [self addActionToQueue:action];
-        return;
+        return nil;
     } else if ([self currentAction] != UINavigationControllerStatePopToRootInProgress){
         [self setCurrentAction:UINavigationControllerStatePopInProgress];
         [self setCompletionBlock:completionBlock];
@@ -119,12 +127,19 @@
     UIViewController *targetedVc = [self estimateTargetedViewController];
     if (nil != targetedVc) { //There is a controller before the current
         [self setTargetedViewController:targetedVc];
-        [self popViewControllerAnimated:animated];
+        if ([self isKindOfClass:[JMONavigationController class]]) {
+            JMONavigationController *navC = (JMONavigationController *)self;
+            [navC superPopViewControllerAnimated:animated];
+        } else {
+            [self popViewControllerAnimated:animated];
+        }
     } else {
         //Nothing to pop, execute completion block and finish
         [self consumeCompletionBlock];
         [self setCurrentAction:UINavigationControllerStateNeutral];
     }
+    
+    return targetedVc;
 }
 
 - (void)popToRootViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
