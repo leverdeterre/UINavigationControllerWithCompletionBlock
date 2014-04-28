@@ -8,16 +8,35 @@
 
 #import "UINavigationController+CompletionBlock.h"
 #import "JMONavigationController.h"
+#import "JRSwizzle.h"
 #import <objc/runtime.h>
 
 @implementation UINavigationController (CompletionBlock)
 
-- (void)activateCompletionBlock
++ (void)activateSwizzling
 {
-    self.delegate = self;
+ 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
+}
+
+- (void)setDelegate_swizzle:(id<UINavigationControllerDelegate>)delegate
+{
+    [self setNextDelegate:delegate];
+ 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
+    [self setDelegate:self];
+    [UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
 }
 
 #pragma mark - accessories
+
+- (id<UINavigationControllerDelegate>)nextDelegate
+{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setNextDelegate:(id<UINavigationControllerDelegate>)nextDelegate
+{
+    objc_setAssociatedObject(self, @selector(nextDelegate),nextDelegate, OBJC_ASSOCIATION_ASSIGN);
+}
 
 - (NSArray *)actionsQueue
 {
@@ -67,12 +86,14 @@
 // Called when the navigation controller shows a new top view controller via a push, pop or setting of the view controller stack.
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    //NSLog(@"%s",__PRETTY_FUNCTION__);
+    //Call nextDelegate
+    if([[self nextDelegate] respondsToSelector:@selector(navigationController:willShowViewController:animated:)]) {
+        [[self nextDelegate] navigationController:navigationController willShowViewController:viewController animated:animated];
+    }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    //NSLog(@"%s",__PRETTY_FUNCTION__);
     if (viewController == [self targetedViewController]) {
         //if we are poping to root, continue
         if ([self currentAction] == UINavigationControllerStatePopToRootInProgress) {
@@ -87,6 +108,39 @@
             [self performNextActionInQueue];
         }
     }
+    
+    //Call nextDelegate
+    if([[self nextDelegate] respondsToSelector:@selector(navigationController:didShowViewController:animated:)]) {
+        [[self nextDelegate] navigationController:navigationController didShowViewController:viewController animated:animated];
+    }
+}
+
+- (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
+                          interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController
+{
+    //Call nextDelegate
+    if([[self nextDelegate] respondsToSelector:@selector(navigationController:interactionControllerForAnimationController:)]) {
+        return [[self nextDelegate] navigationController:navigationController
+             interactionControllerForAnimationController:animationController];
+    }
+    
+    return nil;
+}
+
+- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                   animationControllerForOperation:(UINavigationControllerOperation)operation
+                                                fromViewController:(UIViewController *)fromVC
+                                                  toViewController:(UIViewController *)toVC
+{
+    //Call nextDelegate
+    if ([[self nextDelegate] respondsToSelector:@selector(navigationController:animationControllerForOperation:fromViewController:toViewController:)]) {
+        [[self nextDelegate] navigationController:navigationController
+                  animationControllerForOperation:operation
+                               fromViewController:fromVC
+                                 toViewController:toVC];
+    }
+    
+    return nil;
 }
 
 #pragma mark -
@@ -107,7 +161,6 @@
         } else {
             [self pushViewController:viewController animated:animated];
         }
-        
     }
 }
 

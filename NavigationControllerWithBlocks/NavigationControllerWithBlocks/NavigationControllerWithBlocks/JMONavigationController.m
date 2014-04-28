@@ -10,6 +10,7 @@
 #import "UINavigationController+CompletionBlock.h"
 
 @interface JMONavigationController ()
+@property (weak,nonatomic) id nextNavigationControllerDelegate;
 @end
 
 @implementation JMONavigationController
@@ -19,7 +20,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self activateCompletionBlock];
+        self.delegate = self;
     }
     return self;
 }
@@ -29,7 +30,7 @@
     self = [super initWithRootViewController:rootViewController];
     if (self) {
         // Custom initialization
-        [self activateCompletionBlock];
+        self.delegate = self;
     }
     return self;
 }
@@ -43,8 +44,7 @@
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
-    [self popViewControllerAnimated:animated withCompletionBlock:NULL];
-    return nil;
+    return [self popViewControllerAnimated:animated withCompletionBlock:NULL];;
 }
 
 #pragma mark -

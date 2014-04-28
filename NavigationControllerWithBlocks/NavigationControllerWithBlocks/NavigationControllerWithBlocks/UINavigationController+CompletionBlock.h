@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 
 @interface UINavigationController (CompletionBlock) <UINavigationControllerDelegate>
 
-- (void)activateCompletionBlock;
++ (void)activateSwizzling;
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock;
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock;

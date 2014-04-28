@@ -19,9 +19,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    if (self.navigationController) {
-        [self.navigationController activateCompletionBlock];
-    }
+    self.navigationController.delegate = nil;
+    
     if (self.title.length == 0) {
         self.title = @"controller_first";
     }

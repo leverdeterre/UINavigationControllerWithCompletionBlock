@@ -24,6 +24,7 @@
 		C2400968190BAB95006FBF64 /* JMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400965190BAB95006FBF64 /* JMONavigationController.m */; };
 		C2400969190BAB95006FBF64 /* UINavigationController+CompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */; };
 		C240096C190BFA34006FBF64 /* JMONavigationAction.m in Sources */ = {isa = PBXBuildFile; fileRef = C240096B190BFA34006FBF64 /* JMONavigationAction.m */; };
+		C25CBA4B190EEFA000D03BB5 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = C25CBA4A190EEFA000D03BB5 /* JRSwizzle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+CompletionBlock.m"; sourceTree = "<group>"; };
 		C240096A190BFA34006FBF64 /* JMONavigationAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMONavigationAction.h; sourceTree = "<group>"; };
 		C240096B190BFA34006FBF64 /* JMONavigationAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMONavigationAction.m; sourceTree = "<group>"; };
+		C25CBA49190EEFA000D03BB5 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		C25CBA4A190EEFA000D03BB5 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,7 @@
 		C240092D190BAB57006FBF64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C25CBA48190EEFA000D03BB5 /* JRSwizzle */,
 				C2400963190BAB95006FBF64 /* NavigationControllerWithBlocks */,
 				C240092E190BAB57006FBF64 /* Foundation.framework */,
 				C2400930190BAB57006FBF64 /* CoreGraphics.framework */,
@@ -174,6 +178,16 @@
 			);
 			name = NavigationControllerWithBlocks;
 			path = NavigationControllerWithBlocks/NavigationControllerWithBlocks;
+			sourceTree = "<group>";
+		};
+		C25CBA48190EEFA000D03BB5 /* JRSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				C25CBA49190EEFA000D03BB5 /* JRSwizzle.h */,
+				C25CBA4A190EEFA000D03BB5 /* JRSwizzle.m */,
+			);
+			name = JRSwizzle;
+			path = NavigationControllerWithBlocks/JRSwizzle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C25CBA4B190EEFA000D03BB5 /* JRSwizzle.m in Sources */,
 				C240093B190BAB57006FBF64 /* main.m in Sources */,
 				C2400945190BAB57006FBF64 /* JMOViewController.m in Sources */,
 				C240096C190BFA34006FBF64 /* JMONavigationAction.m in Sources */,

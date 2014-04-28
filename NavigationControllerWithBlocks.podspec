@@ -14,4 +14,5 @@ Pod::Spec.new do |s|
         :tag => "0.0.1"
         }
         s.source_files = 'NavigationControllerWithBlocks/NavigationControllerWithBlocks/NavigationControllerWithBlocks/*'
+  	s.dependency 'JRSwizzle', '~> 1.0'	
 end
