@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
         s.name         = 'NavigationControllerWithBlocks'
-        s.version = '0.0.3'
+        s.version = '0.0.4'
         s.requires_arc = true
         s.author = {
                 'Morissard Jérome' => 'morissardj@gmail.com'
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
         s.homepage = 'https://github.com/leverdeterre/NavigationControllerWithBlocks'
         s.source = {
         :git => 'https://github.com/leverdeterre/NavigationControllerWithBlocks.git',
-        :tag => '0.0.3'
+        :tag => '0.0.4'
         }
         s.source_files = 'NavigationControllerWithBlocks/NavigationControllerWithBlocks/NavigationControllerWithBlocks/*'
   	s.dependency 'JRSwizzle', '~> 1.0'	
