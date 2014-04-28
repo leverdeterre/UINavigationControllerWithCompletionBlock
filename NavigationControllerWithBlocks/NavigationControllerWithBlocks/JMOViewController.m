@@ -49,13 +49,15 @@
                                 @"Main" bundle:[NSBundle mainBundle]];
     JMOViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"JMOViewController"];
     vc.title = [NSString stringWithFormat:@"controller_%d",self.navigationController.viewControllers.count];
-    [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^() {
+     [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Push done !");
     }];
 }
 
 - (IBAction)pop:(id)sender
 {
+    [self.navigationController popViewControllerAnimated:YES];
+
     [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Pop done !");
     }];

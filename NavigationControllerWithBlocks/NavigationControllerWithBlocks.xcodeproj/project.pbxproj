@@ -21,7 +21,6 @@
 		C2400950190BAB57006FBF64 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2400932190BAB57006FBF64 /* UIKit.framework */; };
 		C2400958190BAB57006FBF64 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2400956190BAB57006FBF64 /* InfoPlist.strings */; };
 		C240095A190BAB57006FBF64 /* NavigationControllerWithBlocksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400959190BAB57006FBF64 /* NavigationControllerWithBlocksTests.m */; };
-		C2400968190BAB95006FBF64 /* JMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400965190BAB95006FBF64 /* JMONavigationController.m */; };
 		C2400969190BAB95006FBF64 /* UINavigationController+CompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */; };
 		C240096C190BFA34006FBF64 /* JMONavigationAction.m in Sources */ = {isa = PBXBuildFile; fileRef = C240096B190BFA34006FBF64 /* JMONavigationAction.m */; };
 		C25CBA4B190EEFA000D03BB5 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = C25CBA4A190EEFA000D03BB5 /* JRSwizzle.m */; };
@@ -57,8 +56,6 @@
 		C2400955190BAB57006FBF64 /* NavigationControllerWithBlocksTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NavigationControllerWithBlocksTests-Info.plist"; sourceTree = "<group>"; };
 		C2400957190BAB57006FBF64 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2400959190BAB57006FBF64 /* NavigationControllerWithBlocksTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationControllerWithBlocksTests.m; sourceTree = "<group>"; };
-		C2400964190BAB95006FBF64 /* JMONavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMONavigationController.h; sourceTree = "<group>"; };
-		C2400965190BAB95006FBF64 /* JMONavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMONavigationController.m; sourceTree = "<group>"; };
 		C2400966190BAB95006FBF64 /* UINavigationController+CompletionBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+CompletionBlock.h"; sourceTree = "<group>"; };
 		C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+CompletionBlock.m"; sourceTree = "<group>"; };
 		C240096A190BFA34006FBF64 /* JMONavigationAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMONavigationAction.h; sourceTree = "<group>"; };
@@ -169,8 +166,6 @@
 		C2400963190BAB95006FBF64 /* NavigationControllerWithBlocks */ = {
 			isa = PBXGroup;
 			children = (
-				C2400964190BAB95006FBF64 /* JMONavigationController.h */,
-				C2400965190BAB95006FBF64 /* JMONavigationController.m */,
 				C2400966190BAB95006FBF64 /* UINavigationController+CompletionBlock.h */,
 				C2400967190BAB95006FBF64 /* UINavigationController+CompletionBlock.m */,
 				C240096A190BFA34006FBF64 /* JMONavigationAction.h */,
@@ -292,7 +287,6 @@
 				C240093B190BAB57006FBF64 /* main.m in Sources */,
 				C2400945190BAB57006FBF64 /* JMOViewController.m in Sources */,
 				C240096C190BFA34006FBF64 /* JMONavigationAction.m in Sources */,
-				C2400968190BAB95006FBF64 /* JMONavigationController.m in Sources */,
 				C240093F190BAB57006FBF64 /* JMOAppDelegate.m in Sources */,
 				C2400969190BAB95006FBF64 /* UINavigationController+CompletionBlock.m in Sources */,
 			);

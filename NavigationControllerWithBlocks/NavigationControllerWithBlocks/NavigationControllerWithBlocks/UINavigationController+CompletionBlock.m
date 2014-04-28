@@ -13,19 +13,37 @@
 
 @implementation UINavigationController (CompletionBlock)
 
+#pragma mark - Swizzled methods
+
 + (void)activateSwizzling
 {
- 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
+ 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:)
+                                  withMethod:@selector(_swizzleSetDelegate:) error:nil];
+    [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
+                                  withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
+    [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
+                                  withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
 }
 
-- (void)setDelegate_swizzle:(id<UINavigationControllerDelegate>)delegate
+- (void)_swizzleSetDelegate:(id<UINavigationControllerDelegate>)delegate
 {
     if (self != delegate) {
         [self setNextDelegate:delegate];
     }
- 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
+ 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(_swizzleSetDelegate:) error:nil];
     [self setDelegate:self];
-    [UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(setDelegate_swizzle:) error:nil];
+    [UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(_swizzleSetDelegate:) error:nil];
+}
+
+- (void)_swizzlePushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [self pushViewController:viewController animated:animated withCompletionBlock:NULL];
+}
+
+- (UIViewController *)_swizzlePopViewControllerAnimated:(BOOL)animated
+{
+    UIViewController *vc = [self popViewControllerAnimated:animated withCompletionBlock:NULL];
+    return vc;
 }
 
 #pragma mark - accessories
@@ -161,12 +179,11 @@
         [self setCurrentAction:UINavigationControllerStatePushInProgress];
         [self setTargetedViewController:viewController];
         
-        if ([self isKindOfClass:[JMONavigationController class]]) {
-            JMONavigationController *navC = (JMONavigationController *)self;
-            [navC superPushViewController:viewController animated:animated];
-        } else {
-            [self pushViewController:viewController animated:animated];
-        }
+        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
+                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
+        [self pushViewController:viewController animated:animated];
+        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
+                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
     }
 }
 
@@ -190,12 +207,12 @@
     UIViewController *targetedVc = [self estimateTargetedViewController];
     if (nil != targetedVc) { //There is a controller before the current
         [self setTargetedViewController:targetedVc];
-        if ([self isKindOfClass:[JMONavigationController class]]) {
-            JMONavigationController *navC = (JMONavigationController *)self;
-            [navC superPopViewControllerAnimated:animated];
-        } else {
-            [self popViewControllerAnimated:animated];
-        }
+        
+        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
+                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
+        [self popViewControllerAnimated:animated];
+        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
+                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
     } else {
         //Nothing to pop, execute completion block and finish
         [self consumeCompletionBlock];
