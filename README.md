@@ -57,6 +57,13 @@ Usage UINavigationController+CompletionBlock
 [self.navigationController pushViewController:vc animated:YES];
 ```
 
+Installation using pods 
+-------------------------------------------------------------
+Just add the following line in your podfile
+
+	pod 'NavigationControllerWithBlocks'
+	
+
 ![Image](./screenshots/demo.png)
 
 
