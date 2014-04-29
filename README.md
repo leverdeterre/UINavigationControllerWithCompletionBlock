@@ -43,6 +43,18 @@ Swizzled methods
 
 Usage UINavigationController+CompletionBlock
 -------------------------------------------------------------
+* Activate Swizzling to redirect push/pop native calls to custom implementation
+```objc
+typedef NS_OPTIONS(NSUInteger, UINavigationControllerSwizzlingOption) {
+    UINavigationControllerSwizzlingOptionDelegate       = 1 << 0,
+    UINavigationControllerSwizzlingOptionOriginalPush   = 1 << 1,
+    UINavigationControllerSwizzlingOptionOriginalPop    = 1 << 2
+};
+
++ (void)activateSwizzling;
++ (void)activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOption)options;
+```
+
 * Just call the new pop/push methods 
 ```objc
 [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
