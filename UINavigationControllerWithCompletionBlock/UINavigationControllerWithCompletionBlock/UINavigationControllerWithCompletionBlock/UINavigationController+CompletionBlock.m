@@ -12,16 +12,33 @@
 
 @implementation UINavigationController (CompletionBlock)
 
-#pragma mark - Swizzled methods
+#pragma mark - Swizzling methods
 
 + (void)activateSwizzling
 {
- 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:)
-                                  withMethod:@selector(_swizzleSetDelegate:) error:nil];
-    [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
-                                  withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
-    [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
-                                  withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
+    [self activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOptionDelegate |
+                                        UINavigationControllerSwizzlingOptionOriginalPush |
+                                        UINavigationControllerSwizzlingOptionOriginalPop)];
+}
+
++ (void)activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOption)options
+{
+    [self setSwizzlingOption:options];
+    
+    if (options & UINavigationControllerSwizzlingOptionDelegate) {
+        [UINavigationController jr_swizzleMethod:@selector(setDelegate:)
+                                      withMethod:@selector(_swizzleSetDelegate:) error:nil];
+    }
+    
+    if (options & UINavigationControllerSwizzlingOptionOriginalPush) {
+        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
+                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
+    }
+    
+    if (options & UINavigationControllerSwizzlingOptionOriginalPop) {
+        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
+                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
+    }
 }
 
 - (void)_swizzleSetDelegate:(id<UINavigationControllerDelegate>)delegate
@@ -29,14 +46,36 @@
     if (self != delegate) {
         [self setNextDelegate:delegate];
     }
- 	[UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(_swizzleSetDelegate:) error:nil];
+    
+    if ([self.class swizzlingOption] & UINavigationControllerSwizzlingOptionDelegate) {
+        [UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(_swizzleSetDelegate:) error:nil];
+    }
+    
     [self setDelegate:self];
-    [UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(_swizzleSetDelegate:) error:nil];
+    
+    if ([self.class swizzlingOption] & UINavigationControllerSwizzlingOptionDelegate) {
+        [UINavigationController jr_swizzleMethod:@selector(setDelegate:) withMethod:@selector(_swizzleSetDelegate:) error:nil];
+    }
 }
 
 - (void)_swizzlePushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     [self pushViewController:viewController animated:animated withCompletionBlock:NULL];
+}
+
+- (void)_unSwizzleAndCallNativePushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if ([self.class swizzlingOption] & UINavigationControllerSwizzlingOptionOriginalPush) {
+        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
+                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
+    }
+    
+    [self pushViewController:viewController animated:animated];
+    
+    if ([self.class swizzlingOption] & UINavigationControllerSwizzlingOptionOriginalPush) {
+        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
+                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
+    }
 }
 
 - (UIViewController *)_swizzlePopViewControllerAnimated:(BOOL)animated
@@ -45,7 +84,34 @@
     return vc;
 }
 
+- (UIViewController *)_unSwizzleAndCallNativePopViewControllerAnimated:(BOOL)animated
+{
+    if ([self.class swizzlingOption] & UINavigationControllerSwizzlingOptionOriginalPop) {
+        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
+                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
+    }
+    
+    UIViewController *vc = [self popViewControllerAnimated:animated];
+    
+    if ([self.class swizzlingOption] & UINavigationControllerSwizzlingOptionOriginalPop) {
+        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
+                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
+    }
+    
+    return vc;
+}
+
 #pragma mark - accessories
+
++ (UINavigationControllerSwizzlingOption)swizzlingOption
+{
+    return [objc_getAssociatedObject(self, _cmd) intValue];
+}
+
++ (void)setSwizzlingOption:(UINavigationControllerSwizzlingOption)swizzlingOption
+{
+    objc_setAssociatedObject(self, @selector(swizzlingOption),@(swizzlingOption), OBJC_ASSOCIATION_RETAIN);
+}
 
 - (id<UINavigationControllerDelegate>)nextDelegate
 {
@@ -162,7 +228,7 @@
     return nil;
 }
 
-#pragma mark -
+#pragma mark - New API
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated withCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
@@ -177,12 +243,7 @@
         [self setCompletionBlock:completionBlock];
         [self setCurrentAction:UINavigationControllerStatePushInProgress];
         [self setTargetedViewController:viewController];
-        
-        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
-                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
-        [self pushViewController:viewController animated:animated];
-        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
-                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
+        [self _unSwizzleAndCallNativePushViewController:viewController animated:animated];
     }
 }
 
@@ -206,12 +267,8 @@
     UIViewController *targetedVc = [self estimateTargetedViewController];
     if (nil != targetedVc) { //There is a controller before the current
         [self setTargetedViewController:targetedVc];
+        [self _unSwizzleAndCallNativePopViewControllerAnimated:animated];
         
-        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
-                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
-        [self popViewControllerAnimated:animated];
-        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
-                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
     } else {
         //Nothing to pop, execute completion block and finish
         [self consumeCompletionBlock];
