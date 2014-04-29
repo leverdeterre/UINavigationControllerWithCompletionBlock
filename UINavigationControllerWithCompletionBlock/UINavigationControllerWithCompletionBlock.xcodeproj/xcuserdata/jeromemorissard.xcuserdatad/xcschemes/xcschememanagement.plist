@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>NavigationControllerWithBlocks.xcscheme</key>
+		<key>UINavigationControllerWithCompletionBlock.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>C240092A190BAB57006FBF64</key>
+		<key>C25CBAD6190F758E00D03BB5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C240094B190BAB57006FBF64</key>
+		<key>C25CBAF7190F758E00D03BB5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

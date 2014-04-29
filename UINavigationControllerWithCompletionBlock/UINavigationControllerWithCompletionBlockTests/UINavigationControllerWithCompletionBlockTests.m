@@ -1,18 +1,18 @@
 //
-//  NavigationControllerWithBlocksTests.m
-//  NavigationControllerWithBlocksTests
+//  UINavigationControllerWithCompletionBlockTests.m
+//  UINavigationControllerWithCompletionBlockTests
 //
-//  Created by Jerome Morissard on 4/26/14.
+//  Created by Jerome Morissard on 4/29/14.
 //  Copyright (c) 2014 Jerome Morissard. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface NavigationControllerWithBlocksTests : XCTestCase
+@interface UINavigationControllerWithCompletionBlockTests : XCTestCase
 
 @end
 
-@implementation NavigationControllerWithBlocksTests
+@implementation UINavigationControllerWithCompletionBlockTests
 
 - (void)setUp
 {

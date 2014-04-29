@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C240092A190BAB57006FBF64"
-               BuildableName = "NavigationControllerWithBlocks.app"
-               BlueprintName = "NavigationControllerWithBlocks"
-               ReferencedContainer = "container:NavigationControllerWithBlocks.xcodeproj">
+               BlueprintIdentifier = "C25CBAD6190F758E00D03BB5"
+               BuildableName = "UINavigationControllerWithCompletionBlock.app"
+               BlueprintName = "UINavigationControllerWithCompletionBlock"
+               ReferencedContainer = "container:UINavigationControllerWithCompletionBlock.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C240094B190BAB57006FBF64"
-               BuildableName = "NavigationControllerWithBlocksTests.xctest"
-               BlueprintName = "NavigationControllerWithBlocksTests"
-               ReferencedContainer = "container:NavigationControllerWithBlocks.xcodeproj">
+               BlueprintIdentifier = "C25CBAF7190F758E00D03BB5"
+               BuildableName = "UINavigationControllerWithCompletionBlockTests.xctest"
+               BlueprintName = "UINavigationControllerWithCompletionBlockTests"
+               ReferencedContainer = "container:UINavigationControllerWithCompletionBlock.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C240092A190BAB57006FBF64"
-            BuildableName = "NavigationControllerWithBlocks.app"
-            BlueprintName = "NavigationControllerWithBlocks"
-            ReferencedContainer = "container:NavigationControllerWithBlocks.xcodeproj">
+            BlueprintIdentifier = "C25CBAD6190F758E00D03BB5"
+            BuildableName = "UINavigationControllerWithCompletionBlock.app"
+            BlueprintName = "UINavigationControllerWithCompletionBlock"
+            ReferencedContainer = "container:UINavigationControllerWithCompletionBlock.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C240092A190BAB57006FBF64"
-            BuildableName = "NavigationControllerWithBlocks.app"
-            BlueprintName = "NavigationControllerWithBlocks"
-            ReferencedContainer = "container:NavigationControllerWithBlocks.xcodeproj">
+            BlueprintIdentifier = "C25CBAD6190F758E00D03BB5"
+            BuildableName = "UINavigationControllerWithCompletionBlock.app"
+            BlueprintName = "UINavigationControllerWithCompletionBlock"
+            ReferencedContainer = "container:UINavigationControllerWithCompletionBlock.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C240092A190BAB57006FBF64"
-            BuildableName = "NavigationControllerWithBlocks.app"
-            BlueprintName = "NavigationControllerWithBlocks"
-            ReferencedContainer = "container:NavigationControllerWithBlocks.xcodeproj">
+            BlueprintIdentifier = "C25CBAD6190F758E00D03BB5"
+            BuildableName = "UINavigationControllerWithCompletionBlock.app"
+            BlueprintName = "UINavigationControllerWithCompletionBlock"
+            ReferencedContainer = "container:UINavigationControllerWithCompletionBlock.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

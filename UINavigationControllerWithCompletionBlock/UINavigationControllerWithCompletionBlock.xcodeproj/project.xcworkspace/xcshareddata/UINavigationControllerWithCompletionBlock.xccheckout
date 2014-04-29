@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>0DD83E92-F86C-4019-A570-6E8B04FD8AE8</string>
+	<string>86089A93-89BC-4E8C-872B-C341C2462D60</string>
 	<key>IDESourceControlProjectName</key>
-	<string>NavigationControllerWithBlocks</string>
+	<string>UINavigationControllerWithCompletionBlock</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>BEA83AFE-7D4E-4DEA-AA22-8981AB9B7ED1</key>
 		<string>https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>NavigationControllerWithBlocks/NavigationControllerWithBlocks.xcodeproj/project.xcworkspace</string>
+	<string>UINavigationControllerWithCompletionBlock/UINavigationControllerWithCompletionBlock.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>BEA83AFE-7D4E-4DEA-AA22-8981AB9B7ED1</key>
