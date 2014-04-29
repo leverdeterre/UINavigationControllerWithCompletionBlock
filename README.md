@@ -1,4 +1,4 @@
-NavigationControllerWithBlocks
+UINavigationControllerWithCompletionBlock
 ==============================
 
 The UINavigationController missing API ! (push / pop with optional completionBlock). 
@@ -61,7 +61,7 @@ Installation using pods
 -------------------------------------------------------------
 Just add the following line in your podfile
 
-	pod 'NavigationControllerWithBlocks'
+	pod ' UINavigationControllerWithCompletionBlock'
 	
 
 ![Image](./screenshots/demo.png)
