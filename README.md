@@ -44,7 +44,9 @@ Swizzled methods
 Usage UINavigationController+CompletionBlock
 -------------------------------------------------------------
 1. Activate Swizzling to redirect push/pop native calls to custom implementation
+ ```objc
     [UINavigationController activateSwizzling];
+```
 2. 
 
 * Just call the new pop/push methods 
