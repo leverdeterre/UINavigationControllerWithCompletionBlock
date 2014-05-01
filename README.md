@@ -43,7 +43,7 @@ Swizzled methods
 
 Usage UINavigationController+CompletionBlock
 -------------------------------------------------------------
-* (OPTIONAL) Activate Swizzling to redirect push/pop native calls to custom implementation
+* (OPTIONAL) Activate Swizzling to redirect push/pop native calls to custom implementation. This swizzling is interesting if you don't want to replace all your push/pop methods, or, if you implement your own NavigationControllerDelegate.
 ```objc
 typedef NS_OPTIONS(NSUInteger, UINavigationControllerSwizzlingOption) {
     UINavigationControllerSwizzlingOptionDelegate       = 1 << 0,
