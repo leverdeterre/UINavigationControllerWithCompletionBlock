@@ -10,6 +10,28 @@
 #import "JRSwizzle.h"
 #import <objc/runtime.h>
 
+/**
+ *  UINavigationControllerState is an internal state of the NavigationController
+ */
+typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
+    /**
+     *  Default state, nothing is in progress
+     */
+    UINavigationControllerStateNeutral,
+    /**
+     *  Push in progress
+     */
+    UINavigationControllerStatePushInProgress,
+    /**
+     *  Pop in progress
+     */
+    UINavigationControllerStatePopInProgress,
+    /**
+     *  Pop to root in progress
+     */
+    UINavigationControllerStatePopToRootInProgress
+};
+
 @implementation UINavigationController (CompletionBlock)
 
 #pragma mark - Swizzling methods
