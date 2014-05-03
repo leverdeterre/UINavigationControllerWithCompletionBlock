@@ -1,6 +1,11 @@
 UINavigationControllerWithCompletionBlock
 ==============================
 
+[![License MIT](https://img.shields.io/badge/contact-@leverdeterre-green.svg)](http://twitter.com/leverdeterre)
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](http://github.com/leverdeterre/UINavigationControllerWithCompletionBlock//LICENSE)
+[![CocoaPods](http://img.shields.io/github/release/leverdeterre/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
+
+
 The UINavigationController missing API ! (push / pop with optional completionBlock). 
 The implementation use the navigationController delegate on UINavigationController itself.
 
