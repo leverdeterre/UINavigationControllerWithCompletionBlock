@@ -60,7 +60,7 @@ typedef NS_OPTIONS(NSUInteger, UINavigationControllerSwizzlingOption) {
 + (void)activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOption)options;
 ```
 
-* Just call the new pop/push methods (no need swizzling because your are calling custom methods)
+*  Use the new pop/push methods (no need swizzling because your are calling custom methods)
 ```objc
 [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
 [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
@@ -68,7 +68,7 @@ typedef NS_OPTIONS(NSUInteger, UINavigationControllerSwizzlingOption) {
 }];
 ```
 
-* call Apple the new push/pop API. (Required Swizzling). The native calls will be redirected to the new custom API with default NULL completionBlock
+* Use "old" Apple API. (Required Swizzling). The native calls will be redirected to the new custom API with default NULL completionBlock.
 ```objc
 [self.navigationController popViewControllerAnimated:YES];
 [self.navigationController pushViewController:vc animated:YES];
