@@ -14,8 +14,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [UINavigationController activateSwizzling];
-
     return YES;
 }
 							

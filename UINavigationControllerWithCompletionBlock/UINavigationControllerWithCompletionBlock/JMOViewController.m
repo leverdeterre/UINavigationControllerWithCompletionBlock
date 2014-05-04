@@ -10,6 +10,8 @@
 #import "UINavigationController+CompletionBlock.h"
 
 @interface JMOViewController ()
+@property (weak, nonatomic) IBOutlet UISwitch *swizzDelegateSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *swizzPushPopSwitch;
 @end
 
 @implementation JMOViewController
@@ -45,6 +47,8 @@
 
 - (IBAction)push:(id)sender
 {
+    [self activateSwizzlingDependingOnSwitchStatus];
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"Main" bundle:[NSBundle mainBundle]];
     JMOViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"JMOViewController"];
@@ -56,7 +60,7 @@
 
 - (IBAction)pop:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self activateSwizzlingDependingOnSwitchStatus];
 
     [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Pop done !");
@@ -65,6 +69,8 @@
 
 - (IBAction)popToRootAnimated:(id)sender
 {
+    [self activateSwizzlingDependingOnSwitchStatus];
+
     [self.navigationController popToRootViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"popToRoot done!");
     }];
@@ -72,6 +78,8 @@
 
 - (IBAction)triplepPopBug:(id)sender
 {
+    [self activateSwizzlingDependingOnSwitchStatus];
+    
     [self.navigationController popViewControllerAnimated:YES withCompletionBlock:^() {
         NSLog(@"Hi ! Pop1 done !");
     }];
@@ -83,6 +91,49 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"last pop done" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
     }];
+}
+
+#pragma mark - IBActions old APi 
+
+- (IBAction)pushOld:(id)sender
+{
+    [self activateSwizzlingDependingOnSwitchStatus];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"Main" bundle:[NSBundle mainBundle]];
+    JMOViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"JMOViewController"];
+    vc.title = [NSString stringWithFormat:@"controller_%d",self.navigationController.viewControllers.count];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)popOld:(id)sender
+{
+    [self activateSwizzlingDependingOnSwitchStatus];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)triplepPopOldApi:(id)sender
+{
+    [self activateSwizzlingDependingOnSwitchStatus];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Helpers
+
+- (void)activateSwizzlingDependingOnSwitchStatus
+{
+    if (self.swizzDelegateSwitch.isOn && self.swizzPushPopSwitch.isOn) {
+        [UINavigationController activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOptionDelegate|
+                                                              UINavigationControllerSwizzlingOptionOriginalPush|
+                                                              UINavigationControllerSwizzlingOptionOriginalPop)];
+    } else if (self.swizzPushPopSwitch.isOn) {
+        [UINavigationController activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOptionOriginalPush|
+                                                              UINavigationControllerSwizzlingOptionOriginalPop)];
+    } else if (self.swizzDelegateSwitch.isOn) {
+        [UINavigationController activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOptionDelegate)];
+    }
 }
 
 @end

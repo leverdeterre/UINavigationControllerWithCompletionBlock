@@ -1,6 +1,6 @@
 //
 //  UINavigationController+CompletionBlock.m
-//  NavigationControllerWithBlocks
+//  UINavigationControllerWithBlocks
 //
 //  Created by Jerome Morissard on 4/26/14.
 //  Copyright (c) 2014 Jerome Morissard. All rights reserved.
@@ -45,8 +45,27 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 
 + (void)activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOption)options
 {
+    UINavigationControllerSwizzlingOption previousOption = [self swizzlingOption];
+    
+    //Inactivate previous options
+    if (previousOption & UINavigationControllerSwizzlingOptionDelegate) {
+        [UINavigationController jr_swizzleMethod:@selector(setDelegate:)
+                                      withMethod:@selector(_swizzleSetDelegate:) error:nil];
+    }
+    
+    if (previousOption & UINavigationControllerSwizzlingOptionOriginalPush) {
+        [UINavigationController jr_swizzleMethod:@selector(pushViewController:animated:)
+                                      withMethod:@selector(_swizzlePushViewController:animated:) error:nil];
+    }
+    
+    if (previousOption & UINavigationControllerSwizzlingOptionOriginalPop) {
+        [UINavigationController jr_swizzleMethod:@selector(popViewControllerAnimated:)
+                                      withMethod:@selector(_swizzlePopViewControllerAnimated:) error:nil];
+    }
+    
     [self setSwizzlingOption:options];
     
+    //Activate new options
     if (options & UINavigationControllerSwizzlingOptionDelegate) {
         [UINavigationController jr_swizzleMethod:@selector(setDelegate:)
                                       withMethod:@selector(_swizzleSetDelegate:) error:nil];
