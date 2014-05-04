@@ -3,7 +3,10 @@ UINavigationControllerWithCompletionBlock
 
 [![Twitter](https://img.shields.io/badge/contact-@leverdeterre-green.svg)](http://twitter.com/leverdeterre)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock/blob/master/LICENSE)
-[![CocoaPods](http://img.shields.io/github/release/leverdeterre/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
+[![Release](http://img.shields.io/github/release/leverdeterre/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
+[![Cocoapods](http://img.shields.io/github/cocoapods/v/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
+
+
 
 
 The UINavigationController missing API ! (push / pop with optional completionBlock). 
