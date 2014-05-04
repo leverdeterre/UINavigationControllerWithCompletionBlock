@@ -6,8 +6,6 @@ UINavigationControllerWithCompletionBlock
 [![Release](http://img.shields.io/github/release/leverdeterre/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
 [![Cocoapods](http://img.shields.io/cocoapods/v/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
 
-[![Travis](http://img.shields.io/travis/leverdeterre/UINavigationControllerWithCompletionBlock.svg)](https://travis-ci.org/leverdeterre/UINavigationControllerWithCompletionBlock)
-
 
 
 
