@@ -3,7 +3,10 @@ UINavigationControllerWithCompletionBlock
 
 [![Twitter](https://img.shields.io/badge/contact-@leverdeterre-green.svg)](http://twitter.com/leverdeterre)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock/blob/master/LICENSE)
-[![CocoaPods](http://img.shields.io/github/release/leverdeterre/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
+[![Release](http://img.shields.io/github/release/leverdeterre/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
+[![Cocoapods](http://img.shields.io/cocoapods/v/UINavigationControllerWithCompletionBlock.svg)](https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock)
+
+
 
 
 The UINavigationController missing API ! (push / pop with optional completionBlock). 
@@ -60,7 +63,7 @@ typedef NS_OPTIONS(NSUInteger, UINavigationControllerSwizzlingOption) {
 + (void)activateSwizzlingWithOptions:(UINavigationControllerSwizzlingOption)options;
 ```
 
-* Just call the new pop/push methods (no need swizzling because your are calling custom methods)
+*  Use the new pop/push methods (no need swizzling because your are calling custom methods)
 ```objc
 [self.navigationController popViewControllerAnimated:YES withCompletionBlock:NULL];
 [self.navigationController pushViewController:vc animated:YES withCompletionBlock:^(BOOL successful) {
@@ -68,7 +71,7 @@ typedef NS_OPTIONS(NSUInteger, UINavigationControllerSwizzlingOption) {
 }];
 ```
 
-* call Apple the new push/pop API. (Required Swizzling). The native calls will be redirected to the new custom API with default NULL completionBlock
+* Use "old" Apple API. (Required Swizzling). The native calls will be redirected to the new custom API with default NULL completionBlock.
 ```objc
 [self.navigationController popViewControllerAnimated:YES];
 [self.navigationController pushViewController:vc animated:YES];
