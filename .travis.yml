@@ -1,4 +1,4 @@
 language: objective-c
 xcode_project: UINavigationControllerWithCompletionBlock/UINavigationControllerWithCompletionBlock.xcodeproj # path to your xcodeproj folder
-xcode_scheme: UINavigationControllerWithCompletionBlockTests
+xcode_scheme: UINavigationControllerWithCompletionBlock
 
