@@ -164,47 +164,47 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
     objc_setAssociatedObject(self, @selector(nextDelegate),nextDelegate, OBJC_ASSOCIATION_ASSIGN);
 }
 
-- (NSArray *)actionsQueue
+- (NSArray *)jmoActionsQueue
 {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setActionsQueue:(NSArray *)actions
+- (void)setJmoActionsQueue:(NSArray *)actions
 {
-    objc_setAssociatedObject(self, @selector(actionsQueue),actions, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(jmoActionsQueue),actions, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UINavigationControllerState)currentAction
+- (UINavigationControllerState)jmoCurrentAction
 {
     return [objc_getAssociatedObject(self, _cmd) intValue];
 }
 
-- (void)setCurrentAction:(UINavigationControllerState)action
+- (void)setJmoCurrentAction:(UINavigationControllerState)action
 {
     if (action == UINavigationControllerStateNeutral) {
-        [self setTargetedViewController:nil];
+        [self setJmoTargetedViewController:nil];
     }
-    objc_setAssociatedObject(self, @selector(currentAction), @(action), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(jmoCurrentAction), @(action), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (JMONavCompletionBlock)completionBlock
+- (JMONavCompletionBlock)jmoCompletionBlock
 {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setCompletionBlock:(JMONavCompletionBlock)completionBlock
+- (void)setJmoCompletionBlock:(JMONavCompletionBlock)completionBlock
 {
-    objc_setAssociatedObject(self, @selector(completionBlock), completionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(jmoCompletionBlock), completionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (UIViewController *)targetedViewController
+- (UIViewController *)jmoTargetedViewController
 {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setTargetedViewController:(UIViewController *)vc
+- (void)setJmoTargetedViewController:(UIViewController *)vc
 {
-    objc_setAssociatedObject(self, @selector(targetedViewController), vc, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(jmoTargetedViewController), vc, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - UINavigationController delegate
@@ -220,15 +220,15 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if (viewController == [self targetedViewController]) {
+    if (viewController == [self jmoTargetedViewController]) {
         //if we are poping to root, continue
-        if ([self currentAction] == UINavigationControllerStatePopToRootInProgress) {
+        if ([self jmoCurrentAction] == UINavigationControllerStatePopToRootInProgress) {
             [self popViewControllerAnimated:animated withCompletionBlock:NULL];
         } else {
             
             //if we have push or pop something, use completionBlock and finish
             [self consumeCompletionBlock];
-            [self setCurrentAction:UINavigationControllerStateNeutral];
+            [self setJmoCurrentAction:UINavigationControllerStateNeutral];
 
             //nextAction
             [self performNextActionInQueue];
@@ -277,13 +277,13 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
         self.delegate = self;
     }
     
-    if ([self currentAction] == UINavigationControllerStatePushInProgress) {
+    if ([self jmoCurrentAction] == UINavigationControllerStatePushInProgress) {
         JMONavigationAction *action = [JMONavigationAction actionTye:JMONavigationActionTypePush completionBlock:completionBlock animated:animated viewController:viewController];
         [self addActionToQueue:action];
     } else {
-        [self setCompletionBlock:completionBlock];
-        [self setCurrentAction:UINavigationControllerStatePushInProgress];
-        [self setTargetedViewController:viewController];
+        [self setJmoCompletionBlock:completionBlock];
+        [self setJmoCurrentAction:UINavigationControllerStatePushInProgress];
+        [self setJmoTargetedViewController:viewController];
         [self _unSwizzleAndCallNativePushViewController:viewController animated:animated];
     }
 }
@@ -294,26 +294,26 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
         self.delegate = self;
     }
     
-    if ([self currentAction] == UINavigationControllerStatePopInProgress) {
+    if ([self jmoCurrentAction] == UINavigationControllerStatePopInProgress) {
         JMONavigationAction *action = [JMONavigationAction actionTye:JMONavigationActionTypePop completionBlock:completionBlock animated:animated];
         [self addActionToQueue:action];
         return nil;
-    } else if ([self currentAction] != UINavigationControllerStatePopToRootInProgress){
-        [self setCurrentAction:UINavigationControllerStatePopInProgress];
-        [self setCompletionBlock:completionBlock];
+    } else if ([self jmoCurrentAction] != UINavigationControllerStatePopToRootInProgress){
+        [self setJmoCurrentAction:UINavigationControllerStatePopInProgress];
+        [self setJmoCompletionBlock:completionBlock];
     } else {
         //We are UINavigationControllerPopToRootInProgress, we keep the final completionBlock
     }
     
     UIViewController *targetedVc = [self estimateTargetedViewController];
     if (nil != targetedVc) { //There is a controller before the current
-        [self setTargetedViewController:targetedVc];
+        [self setJmoTargetedViewController:targetedVc];
         [self _unSwizzleAndCallNativePopViewControllerAnimated:animated];
         
     } else {
         //Nothing to pop, execute completion block and finish
         [self consumeCompletionBlock];
-        [self setCurrentAction:UINavigationControllerStateNeutral];
+        [self setJmoCurrentAction:UINavigationControllerStateNeutral];
     }
     
     return targetedVc;
@@ -325,8 +325,8 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
         self.delegate = self;
     }
     
-    [self setCurrentAction:UINavigationControllerStatePopToRootInProgress];
-    [self setCompletionBlock:completionBlock];
+    [self setJmoCurrentAction:UINavigationControllerStatePopToRootInProgress];
+    [self setJmoCompletionBlock:completionBlock];
     [self popViewControllerAnimated:animated withCompletionBlock:NULL];
 }
 
@@ -334,7 +334,7 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 
 - (JMONavigationAction *)nextAction
 {
-    NSArray *actions = [self actionsQueue];
+    NSArray *actions = [self jmoActionsQueue];
     if(actions.count > 0) {
         return [actions firstObject];
     }
@@ -343,20 +343,20 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 
 - (void)removActionToQueue:(JMONavigationAction *)action
 {
-    NSMutableArray *actions = [[self actionsQueue] mutableCopy];
+    NSMutableArray *actions = [[self jmoActionsQueue] mutableCopy];
     [actions removeObject:action];
-    [self setActionsQueue:actions];
+    [self setJmoActionsQueue:actions];
 }
 
 - (void)addActionToQueue:(JMONavigationAction *)action
 {
-    NSMutableArray *actions = [[self actionsQueue] mutableCopy];
+    NSMutableArray *actions = [[self jmoActionsQueue] mutableCopy];
     if(nil == actions) {
         actions = [NSMutableArray new];
     }
         
     [actions addObject:action];
-    [self setActionsQueue:actions];
+    [self setJmoActionsQueue:actions];
 }
 
 #pragma mark - Helpers
@@ -376,7 +376,7 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
     JMONavigationAction *nextAction = [self nextAction];
     if (nil != nextAction) {
         [self removActionToQueue:nextAction];
-        [self setCurrentAction:UINavigationControllerStateNeutral];
+        [self setJmoCurrentAction:UINavigationControllerStateNeutral];
         if (nextAction.type == JMONavigationActionTypePop) {
             [self popViewControllerAnimated:nextAction.animated withCompletionBlock:nextAction.completionBlock];
         } else {
@@ -387,10 +387,10 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 
 - (void)consumeCompletionBlock
 {
-    if ([self completionBlock]) {
-        JMONavCompletionBlock block = [self completionBlock];
+    if ([self jmoCompletionBlock]) {
+        JMONavCompletionBlock block = [self jmoCompletionBlock];
         block();
-        [self setCompletionBlock:NULL];
+        [self setJmoCompletionBlock:NULL];
     }
 }
 
