@@ -79,7 +79,7 @@ Installation using pods
 -------------------------------------------------------------
 Just add the following line in your podfile
 
-	pod ' UINavigationControllerWithCompletionBlock'
+	pod 'UINavigationControllerWithCompletionBlock'
 	
 
 ![Image](./screenshots/demo.png)
