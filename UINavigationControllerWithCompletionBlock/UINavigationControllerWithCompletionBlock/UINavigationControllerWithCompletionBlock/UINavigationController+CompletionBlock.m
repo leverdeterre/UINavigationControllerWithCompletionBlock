@@ -146,12 +146,12 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 
 + (UINavigationControllerSwizzlingOption)swizzlingOption
 {
-    return [objc_getAssociatedObject(self, _cmd) intValue];
+    return [objc_getAssociatedObject([UINavigationController class], _cmd) intValue];
 }
 
 + (void)setSwizzlingOption:(UINavigationControllerSwizzlingOption)swizzlingOption
 {
-    objc_setAssociatedObject(self, @selector(swizzlingOption),@(swizzlingOption), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject([UINavigationController class], @selector(swizzlingOption),@(swizzlingOption), OBJC_ASSOCIATION_RETAIN);
 }
 
 - (id<UINavigationControllerDelegate>)nextDelegate

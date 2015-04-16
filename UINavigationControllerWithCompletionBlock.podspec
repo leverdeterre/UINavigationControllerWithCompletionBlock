@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
         s.name         = 'UINavigationControllerWithCompletionBlock'
-        s.version = '0.0.7'
+        s.version = '0.0.7.1-vinted'
         s.requires_arc = true
         s.author = {
                 'Morissard Jérome' => 'morissardj@gmail.com'
@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
         s.license      = { :type => 'MIT' }
         s.homepage = 'https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock'
         s.source = {
-        :git => 'https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock.git',
-        :tag => '0.0.7'
+        :git => 'https://github.com/vinted/UINavigationControllerWithCompletionBlock',
+        :tag => '0.0.7.1-vinted'
         }
         s.source_files = 'UINavigationControllerWithCompletionBlock/UINavigationControllerWithCompletionBlock/UINavigationControllerWithCompletionBlock/*'
   	s.dependency 'JRSwizzle', '~> 1.0'
