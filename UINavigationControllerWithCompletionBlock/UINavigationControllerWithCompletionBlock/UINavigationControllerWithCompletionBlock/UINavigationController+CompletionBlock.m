@@ -260,10 +260,10 @@ typedef NS_ENUM(NSUInteger, UINavigationControllerState) {
 {
     //Call nextDelegate
     if ([[self nextDelegate] respondsToSelector:@selector(navigationController:animationControllerForOperation:fromViewController:toViewController:)]) {
-        [[self nextDelegate] navigationController:navigationController
-                  animationControllerForOperation:operation
-                               fromViewController:fromVC
-                                 toViewController:toVC];
+        return [[self nextDelegate] navigationController:navigationController
+                         animationControllerForOperation:operation
+                                      fromViewController:fromVC
+                                        toViewController:toVC];
     }
     
     return nil;
