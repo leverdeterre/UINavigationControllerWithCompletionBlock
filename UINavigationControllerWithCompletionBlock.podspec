@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
                        It's now possible to push/pop viewControllers Controller with completionBlocks.
                        oh Yeah !
+                       The summary is not meaningful ?
                        DESC
   s.homepage         = "https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
