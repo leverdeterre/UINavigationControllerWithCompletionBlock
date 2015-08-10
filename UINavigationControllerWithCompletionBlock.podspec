@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   s.version          = "0.0.8"
   s.summary          = "The UINavigationController missing methods, push/pop with completionBlocks."
   s.description      = <<-DESC
-                       The UINavigationController missing methods, push/pop with completionBlocks.
                        It's now possible to push/pop viewControllers Controller with completionBlocks.
                        oh Yeah !
                        DESC
@@ -21,7 +20,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Jérôme Morissard" => "morissardj@gmail.com" }
   s.source           = { :git => "https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://twitter.com/leverdeterre'
 
   s.platform     = :ios, '5.0'
   s.requires_arc = true
