@@ -1,0 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'UINavigationControllerWithCompletionBlock_Example', :exclusive => true do
+  pod "UINavigationControllerWithCompletionBlock", :path => "../"
+end
+
+target 'UINavigationControllerWithCompletionBlock_Tests', :exclusive => true do
+  pod "UINavigationControllerWithCompletionBlock", :path => "../"
+
+  pod 'Kiwi'
+  pod 'FBSnapshotTestCase'
+end

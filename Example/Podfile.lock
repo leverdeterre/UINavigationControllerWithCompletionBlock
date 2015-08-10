@@ -1,0 +1,27 @@
+PODS:
+  - FBSnapshotTestCase (2.0.3):
+    - FBSnapshotTestCase/SwiftSupport (= 2.0.3)
+  - FBSnapshotTestCase/Core (2.0.3)
+  - FBSnapshotTestCase/SwiftSupport (2.0.3):
+    - FBSnapshotTestCase/Core
+  - JRSwizzle (1.0)
+  - Kiwi (2.3.1)
+  - UINavigationControllerWithCompletionBlock (0.1.0):
+    - JRSwizzle (~> 1.0)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - Kiwi
+  - UINavigationControllerWithCompletionBlock (from `../`)
+
+EXTERNAL SOURCES:
+  UINavigationControllerWithCompletionBlock:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: d0eeca6bf87958e088b254396ae66873f971cfb1
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  Kiwi: f038a6c61f7a9e4d7766bff5717aa3b3fdb75f55
+  UINavigationControllerWithCompletionBlock: 15297b30ac2ed01ca3a0113a8e110b4360cd6902
+
+COCOAPODS: 0.37.2

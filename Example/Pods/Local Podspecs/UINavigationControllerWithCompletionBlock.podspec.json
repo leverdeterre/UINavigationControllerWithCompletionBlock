@@ -1,0 +1,30 @@
+{
+  "name": "UINavigationControllerWithCompletionBlock",
+  "version": "0.1.0",
+  "summary": "A short description of UINavigationControllerWithCompletionBlock.",
+  "description": "                       An optional longer description of UINavigationControllerWithCompletionBlock\n\n                       * Markdown format.\n                       * Don't worry about the indent, we strip it!\n",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/UINavigationControllerWithCompletionBlock",
+  "license": "MIT",
+  "authors": {
+    "Jerome Morissard": "jerome.morissard@backelite.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/UINavigationControllerWithCompletionBlock.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "5.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "UINavigationControllerWithCompletionBlock": [
+      "Pod/Assets/*.png"
+    ]
+  },
+  "dependencies": {
+    "JRSwizzle": [
+      "~> 1.0"
+    ]
+  }
+}

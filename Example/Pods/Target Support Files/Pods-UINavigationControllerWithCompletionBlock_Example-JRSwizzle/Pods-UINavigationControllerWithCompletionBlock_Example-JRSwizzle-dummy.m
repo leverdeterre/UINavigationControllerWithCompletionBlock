@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_UINavigationControllerWithCompletionBlock_Example_JRSwizzle : NSObject
+@end
+@implementation PodsDummy_Pods_UINavigationControllerWithCompletionBlock_Example_JRSwizzle
+@end

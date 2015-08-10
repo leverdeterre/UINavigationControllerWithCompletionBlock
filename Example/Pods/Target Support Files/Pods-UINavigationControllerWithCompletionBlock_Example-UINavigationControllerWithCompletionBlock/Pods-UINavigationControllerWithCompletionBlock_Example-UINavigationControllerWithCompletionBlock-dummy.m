@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_UINavigationControllerWithCompletionBlock_Example_UINavigationControllerWithCompletionBlock : NSObject
+@end
+@implementation PodsDummy_Pods_UINavigationControllerWithCompletionBlock_Example_UINavigationControllerWithCompletionBlock
+@end

@@ -1,0 +1,6 @@
+framework module UINavigationControllerWithCompletionBlock {
+  umbrella header "Pods-UINavigationControllerWithCompletionBlock_Example-UINavigationControllerWithCompletionBlock-umbrella.h"
+
+  export *
+  module * { export * }
+}
