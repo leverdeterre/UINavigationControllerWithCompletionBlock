@@ -12,10 +12,8 @@ Pod::Spec.new do |s|
   s.version          = "0.0.8"
   s.summary          = "The UINavigationController missing methods, push/pop with completionBlocks."
   s.description      = <<-DESC
-                       An optional longer description of UINavigationControllerWithCompletionBlock
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       The UINavigationController missing methods, push/pop with completionBlocks.
+                       It's now possible to pushController/popController with completionBlocks '
                        DESC
   s.homepage         = "https://github.com/leverdeterre/UINavigationControllerWithCompletionBlock"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
