@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void (^JMONavCompletionBlock)();
+typedef void (^JMONavCompletionBlock)(void);
 
 typedef NS_ENUM(NSUInteger, JMONavigationActionType) {
     JMONavigationActionTypePush,
